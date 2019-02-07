@@ -17,7 +17,7 @@ matrix:
   include:
     - env: TOX_SUFFIX="boto3"
       python: "3.7"
-      dist: precise
+      dist: xenial
       sudo: true
 #    - env: TOX_SUFFIX="boto3"
 #      python: "3.6"
