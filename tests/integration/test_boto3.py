@@ -1,4 +1,5 @@
 import pytest
+import os
 
 boto3 = pytest.importorskip("boto3")
 
@@ -6,9 +7,20 @@ import boto3  # NOQA
 import botocore  # NOQA
 import vcr  # NOQA
 
+ses = boto3.Session(
+    aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+    aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
+    aws_session_token=None,
+    region_name=os.environ['AWS_DEFAULT_REGION'],
+    # botocore_session=None,
+    # profile_name=None
+)
+
+IAM_CLIENT = ses.client('iam')
 
 def test_lol():
-    assert boto3.__version__ == '1.0'
+    assert IAM_CLIENT.get_user() == 'user'
+    assert boto3.__version__ == '1.9.89'
 
 # try:
 #     from botocore import awsrequest  # NOQA
