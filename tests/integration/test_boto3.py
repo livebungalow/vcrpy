@@ -18,9 +18,10 @@ ses = boto3.Session(
 
 IAM_CLIENT = ses.client('iam')
 
+
 def test_lol():
     response = IAM_CLIENT.get_user()
-    print(response)
+    assert response['User']['UserName'] == 'user'
     assert 3 == 'user'
     assert boto3.__version__ == '1.9.89'
 
