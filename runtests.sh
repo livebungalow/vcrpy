@@ -1,3 +1,3 @@
 #!/bin/bash
 
-py.test $*
+REQUESTS_CA_BUNDLE=`python -m pytest_httpbin.certs` py.test $*
