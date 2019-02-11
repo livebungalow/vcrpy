@@ -17,35 +17,6 @@ env:
     - TOX_SUFFIX="tornado4"
     - TOX_SUFFIX="aiohttp"
 matrix:
-  include:
-    - env: TOX_SUFFIX="boto3"
-      python: "3.7"
-      dist: xenial
-      sudo: true
-#    - env: TOX_SUFFIX="flakes"
-#      python: "3.7"
-#      dist: xenial
-#      sudo: true
-    - env: TOX_SUFFIX="requests"
-      python: "3.7"
-      dist: xenial
-      sudo: true
-    - env: TOX_SUFFIX="httplib2"
-      python: "3.7"
-      dist: xenial
-      sudo: true
-    - env: TOX_SUFFIX="urllib3121"
-      python: "3.7"
-      dist: xenial
-      sudo: true
-    - env: TOX_SUFFIX="tornado4"
-      python: "3.7"
-      dist: xenial
-      sudo: true
-    - env: TOX_SUFFIX="aiohttp"
-      python: "3.7"
-      dist: xenial
-      sudo: true
 #  allow_failures:
 ##    - env: TOX_SUFFIX="boto3"
 #    - env: TOX_SUFFIX="aiohttp"
@@ -67,12 +38,12 @@ matrix:
 #    - env: TOX_SUFFIX="aiohttp"
 #      python: pypy
 python:
-#- "2.7"
-#- "3.4"
-#- "3.6"
+- "2.7"
+- "3.4"
+- "3.6"
 - "3.7"
-#- "pypy"
-#- "pypy3.5-5.9.0"
+- "pypy"
+- "pypy3.5-5.9.0"
 install:
 - pip install tox-travis
 - if [[ $TOX_SUFFIX != 'flakes' ]]; then python setup.py install ; fi
