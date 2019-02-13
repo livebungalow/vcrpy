@@ -22,30 +22,24 @@ try:
     from botocore import awsrequest  # NOQA
 
     botocore_awsrequest = True
-    botocore_vendored_requests = False
 except ImportError:
     botocore_awsrequest = False
-    botocore_vendored_requests = True
+
 
 # skip tests if boto does not use vendored requests anymore
 # https://github.com/boto/botocore/pull/1495
-boto3_vendored = pytest.mark.skipif(
-    botocore_vendored_requests,
+boto3_skip_vendored_requests = pytest.mark.skipif(
+    botocore_awsrequest,
     reason='botocore version {ver} does not use vendored requests anymore.'.format(
         ver=botocore.__version__))
 
-boto3_awsrequest = pytest.mark.skipif(
-    botocore_awsrequest,
+boto3_skip_awsrequest = pytest.mark.skipif(
+    not botocore_awsrequest,
     reason='botocore version {ver} still uses vendored requests.'.format(
         ver=botocore.__version__))
 
 
-# bucket = 'boto3-demo-1337'  # a bucket you can access
-# key = 'test/my_test.txt'  # key with r+w access
-# content = 'hello world i am a string'  # content to put in the test file
-
-
-@boto3_awsrequest
+@boto3_skip_vendored_requests
 def test_boto_vendored_stubs(tmpdir):
     with vcr.use_cassette(str(tmpdir.join('boto3-stubs.yml'))):
         # Perform the imports within the patched context so that
@@ -60,7 +54,7 @@ def test_boto_vendored_stubs(tmpdir):
         VerifiedHTTPSConnection('hostname.does.not.matter')
 
 
-@boto3_vendored
+@boto3_skip_awsrequest
 def test_boto3_awsrequest_stubs(tmpdir):
     with vcr.use_cassette(str(tmpdir.join('boto3-stubs.yml'))):
         from botocore.awsrequest import AWSHTTPConnection, AWSHTTPSConnection
