@@ -48,4 +48,6 @@ install:
 - pip install tox-travis
 - if [[ $TOX_SUFFIX != 'flakes' ]]; then python setup.py install ; fi
 script:
-- if [[ $TOX_SUFFIX == "boto3"]]; then pytest -vs -r s; else tox -e "${TOX_SUFFIX}"; fi
+- if [[ $TOX_SUFFIX == "boto3" ]]; then pytest -vs -r s; else tox -e "${TOX_SUFFIX}"; fi
+
+
